@@ -1,9 +1,9 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -11,4 +11,22 @@
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  background-image: url("/img/scp45.png");
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+div#app { min-height: calc(100vh - 2.5rem); }
+
+footer {
+  min-height: 2.5rem;
+  padding: 0.5rem;
+  text-align: center;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: -1px -1px rgba(0, 0, 0, 0.04);
 }
