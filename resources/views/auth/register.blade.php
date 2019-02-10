@@ -12,14 +12,14 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -58,6 +58,34 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="scpbzcode" class="col-md-4 col-form-label text-md-right">{{ __('scp.bz Code (Available in SSSC)') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="scpbzcode" type="text" class="form-control{{ $errors->has('scpbzcode') ? ' is-invalid' : '' }}" name="scpbzcode" value="{{ old('scpbzcode') }}" required autofocus>
+
+                                @if ($errors->has('scpbzcode'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('scpbzcode') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="wikidotusername" class="col-md-4 col-form-label text-md-right">{{ __('Wikidot Username') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="wikidotusername" type="text" class="form-control{{ $errors->has('wikidotusername') ? ' is-invalid' : '' }}" name="wikidotusername" value="{{ old('wikidotusername') }}" required autofocus>
+
+                                @if ($errors->has('wikidotusername'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('wikidotusername') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
