@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'scpbzcode' => [Rule::in([env('SCP_BZ_CODE')])],
+            'scpbzcode' => ['required', Rule::in([env('SCP_BZ_CODE')])],
             'wikidotusername' => ['required', 'string', 'max:255']
         ]);
     }
@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'metadata' => json_encode(''),
             'wikidotusername' => $data['wikidotusername'],
         ]);
     }
