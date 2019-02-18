@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'wikidotusername' => $data['wikidotusername'],
+            'metadata' => json_encode([], JSON_FORCE_OBJECT)
         ]);
     }
 }
