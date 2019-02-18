@@ -47,8 +47,11 @@ class User extends Authenticatable
         # only when necessary.
         #
         # We will take the user object, and get it's directly connected memberships.
-        # For each of those, we will access its memberships() method and see if any other groups are returned.
-        # If we return a Collection...
+        # For each of those, we will add their ids to flattenedpermissions.
+        # Then we'll take them and look for any sub-memberships via the recurse() function which calls itself.
+        # This will go an arbitrary number of levels deep.
+        # Finally, we will take the flattenedpermissions and groupmemberships properties and save them in user metadata.
+
         $groups = $this->memberships()->get(); // returns a collection whether or not there are any memberships.
 
         if ($groups->isEmpty()) { return null; }
@@ -61,9 +64,18 @@ class User extends Authenticatable
                 $result = $this->recurse($group->group_id);
                 if ($result == null) { continue; }
             }
-
+            // Get names from IDs and save.
             $groupcollection = Group::whereIn('id',$this->flattenedpermissions)->pluck('name');
             foreach ($groupcollection as $g) { $this->groupmemberships[] = $g; }
+
+            // Pull existing metadata, update, and save.
+            $metadata = json_decode($this->metadata, true);
+            $metadata['group_ids'] = $this->flattenedpermissions;
+            $metadata['group_names'] = $this->groupmemberships;
+            $this->metadata = json_encode($metadata);
+            $this->save();
+
+            // Fin.
             return $this->flattenedpermissions;
 
         }
@@ -77,6 +89,7 @@ class User extends Authenticatable
                 if(!in_array($group2->group_id, $this->flattenedpermissions)) {
                     $this->flattenedpermissions[] = $group2->group_id;
                 }
+                // Try again with the next level down.
                 $result = $this->recurse($group2->group_id);
                 if ($result == null) { continue; }
             }
