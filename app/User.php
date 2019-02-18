@@ -127,6 +127,7 @@ class User extends Authenticatable
     public function isMemberOf(string $name)
     {
         $metadata = json_decode($this->metadata, true);
+        if(!array_key_exists('group_names', $metadata)) { return false; } // User has no memberships.
         return in_array($name, $metadata['group_names']);
     }
 }
