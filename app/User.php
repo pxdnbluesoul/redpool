@@ -70,8 +70,8 @@ class User extends Authenticatable
 
             // Pull existing metadata, update, and save.
             $metadata = json_decode($this->metadata, true);
-            $metadata['group_ids'] = $this->flattenedpermissions;
-            $metadata['group_names'] = $this->groupmemberships;
+            $metadata['Group IDs'] = $this->flattenedpermissions;
+            $metadata['Group Names'] = $this->groupmemberships;
             $this->metadata = json_encode($metadata);
             $this->save();
 
@@ -127,8 +127,8 @@ class User extends Authenticatable
     public function isMemberOf(string $name)
     {
         $metadata = json_decode($this->metadata, true);
-        if(!array_key_exists('group_names', $metadata)) { return false; } // User has no memberships.
-        return in_array($name, $metadata['group_names']);
+        if(!array_key_exists('Group Names', $metadata)) { return false; } // User has no memberships.
+        return in_array($name, $metadata['Group Names']);
     }
 
 
@@ -136,9 +136,9 @@ class User extends Authenticatable
     public function isMemberOfAny(array $groups)
     {
         $metadata = json_decode($this->metadata, true);
-        if(!array_key_exists('group_names', $metadata)) { return false; } // User has no memberships.
+        if(!array_key_exists('Group Names', $metadata)) { return false; } // User has no memberships.
 
         // If there is any overlap between the provided groups and the user metadata, return true. If not return false.
-        return boolval(array_intersect($groups, $metadata['group_names']));
+        return boolval(array_intersect($groups, $metadata['Group Names']));
     }
 }
