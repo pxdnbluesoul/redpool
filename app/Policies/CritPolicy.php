@@ -6,7 +6,7 @@ use App\User;
 use App\Crit;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CritPolicy
+class CritPolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class CritPolicy
      */
     public function view(User $user, Crit $crit)
     {
-        //
+        return $this->getAuthorization($user, 'Crit', $crit, 'View');
     }
 
     /**
@@ -30,7 +30,13 @@ class CritPolicy
      */
     public function create(User $user)
     {
-        //
+        // Users can generally create crits unless they meet any of a few criteria:
+
+        // They are in a broad deny group:
+        if ($user->isMemberOf('Deny Crit (Create)')) { return false; }
+
+        // ...and that's about it, actually.
+        else { return true; }
     }
 
     /**
@@ -42,7 +48,7 @@ class CritPolicy
      */
     public function update(User $user, Crit $crit)
     {
-        //
+        return $this->getAuthorization($user, 'Crit', $crit, 'Update');
     }
 
     /**
@@ -54,7 +60,7 @@ class CritPolicy
      */
     public function delete(User $user, Crit $crit)
     {
-        //
+        return $this->getAuthorization($user, 'Crit', $crit, 'Soft Delete');
     }
 
     /**
@@ -66,7 +72,7 @@ class CritPolicy
      */
     public function restore(User $user, Crit $crit)
     {
-        //
+        return $this->getAuthorization($user, 'Crit', $crit, 'Restore');
     }
 
     /**
@@ -78,6 +84,6 @@ class CritPolicy
      */
     public function forceDelete(User $user, Crit $crit)
     {
-        //
+        return $this->getAuthorization($user, 'Crit', $crit, 'Hard Delete');
     }
 }

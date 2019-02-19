@@ -6,7 +6,7 @@ use App\User;
 use App\Upload;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UploadPolicy
+class UploadPolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class UploadPolicy
      */
     public function view(User $user, Upload $upload)
     {
-        //
+        return $this->getAuthorization($user, 'Upload', $upload, 'View');
     }
 
     /**
@@ -30,7 +30,13 @@ class UploadPolicy
      */
     public function create(User $user)
     {
-        //
+        // Users can generally create uploads unless they meet any of a few criteria:
+
+        // They are in a broad deny group:
+        if ($user->isMemberOf('Deny Upload (Create)')) { return false; }
+
+        // ...and that's about it, actually.
+        else { return true; }
     }
 
     /**
@@ -42,7 +48,7 @@ class UploadPolicy
      */
     public function update(User $user, Upload $upload)
     {
-        //
+        return $this->getAuthorization($user, 'Upload', $upload, 'Update');
     }
 
     /**
@@ -54,7 +60,7 @@ class UploadPolicy
      */
     public function delete(User $user, Upload $upload)
     {
-        //
+        return $this->getAuthorization($user, 'Upload', $upload, 'Soft Delete');
     }
 
     /**
@@ -66,7 +72,7 @@ class UploadPolicy
      */
     public function restore(User $user, Upload $upload)
     {
-        //
+        return $this->getAuthorization($user, 'Upload', $upload, 'Restore');
     }
 
     /**
@@ -78,6 +84,6 @@ class UploadPolicy
      */
     public function forceDelete(User $user, Upload $upload)
     {
-        //
+        return $this->getAuthorization($user, 'Upload', $upload, 'Hard Delete');
     }
 }

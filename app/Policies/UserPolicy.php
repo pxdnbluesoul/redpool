@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class UserPolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        return $this->getAuthorization($user, 'User', $model, 'View');
     }
 
     /**
@@ -29,7 +29,13 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        // Users can generally not create other users unless they meet any of a few criteria:
+
+        // They are in a broad allow group:
+        if ($user->isMemberOf('Allow User (Create)')) { return true; }
+
+        // ...and that's about it, actually.
+        else { return false; }
     }
 
     /**
@@ -41,7 +47,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $this->getAuthorization($user, 'User', $model, 'Update');
     }
 
     /**
@@ -53,7 +59,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $this->getAuthorization($user, 'User', $model, 'Soft Delete');
     }
 
     /**
@@ -65,7 +71,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return $this->getAuthorization($user, 'User', $model, 'Restore');
     }
 
     /**
@@ -77,6 +83,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return $this->getAuthorization($user, 'User', $model, 'Hard Delete');
     }
 }

@@ -6,7 +6,7 @@ use App\User;
 use App\Page;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PagePolicy
+class PagePolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -19,50 +19,7 @@ class PagePolicy
      */
     public function view(User $user, Page $page)
     {
-        // DENY RULES
-
-        // Disabled users can't do anything. (Explicit Deny)
-        if ($user->isMemberOf('Disabled')) { return false; }
-
-        // Look for explicit deny rules in the page metadata.
-        try {
-            $blockedusers = $page->getMetadata('blocked_users');
-            if (in_array($user->id, $blockedusers)) { return false; }
-
-            $blockedgroups = $page->getMetadata('blocked_groups');
-            $usergroups = $user->getMetadata('group_ids');
-
-            // Any overlap means the deny takes precedence.
-            if (boolval(array_intersect($blockedgroups, $usergroups))) { return false; };
-        }
-        catch (\OutOfBoundsException $e) { /* No metadata here is common, carry on. */ }
-
-        // ALLOW RULES
-
-        // A user can view a page they created.
-        if ($page->user_id == $user->id) { return true; }
-
-        // Then we inherit the standard Page Viewers permission.
-        if ($user->isMemberOf('Page Viewers')) { return true; }
-
-        // If none of the above apply, let's look for overrides in the page metadata.
-        else {
-            try {
-                $viewusers = $page->getMetadata('view_users');
-                if (in_array($user->id, $viewusers)) {
-                    // If the user is explicitly allowed it, allow it.
-                    return true;
-                }
-
-                $viewgroups = $page->getMetadata('view_groups');
-                $usergroups = $user->getMetadata('group_ids');
-
-                // If there is overlap between view_groups and the user's group memberships, allow it, otherwise deny it.
-                return boolval(array_intersect($viewgroups, $usergroups));
-            }
-            // Lastly, If they're not a member of any groups and didn't make the page, deny.
-            catch (\OutOfBoundsException $e) { return false; }
-        }
+        return $this->getAuthorization($user, 'Page', $page, 'View');
     }
 
     /**
@@ -73,7 +30,13 @@ class PagePolicy
      */
     public function create(User $user)
     {
-        return !$user->isMemberOf('Disabled');
+        // Users can generally create pages unless they meet any of a few criteria:
+
+        // They are in a broad deny group:
+        if ($user->isMemberOf('Deny Page (Create)')) { return false; }
+
+        // ...and that's about it, actually.
+        else { return true; }
     }
 
     /**
@@ -85,7 +48,7 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
-        //
+        return $this->getAuthorization($user, 'Page', $page, 'Update');
     }
 
     /**
@@ -97,7 +60,7 @@ class PagePolicy
      */
     public function delete(User $user, Page $page)
     {
-        //
+        return $this->getAuthorization($user, 'Page', $page, 'Soft Delete');
     }
 
     /**
@@ -109,7 +72,7 @@ class PagePolicy
      */
     public function restore(User $user, Page $page)
     {
-        //
+        return $this->getAuthorization($user, 'Page', $page, 'Restore');
     }
 
     /**
@@ -121,6 +84,6 @@ class PagePolicy
      */
     public function forceDelete(User $user, Page $page)
     {
-        //
+        return $this->getAuthorization($user, 'Page', $page, 'Hard Delete');
     }
 }

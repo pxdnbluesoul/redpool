@@ -6,7 +6,7 @@ use App\User;
 use App\Paste;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PastePolicy
+class PastePolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class PastePolicy
      */
     public function view(User $user, Paste $paste)
     {
-        //
+        return $this->getAuthorization($user, 'Paste', $paste, 'View');
     }
 
     /**
@@ -30,7 +30,13 @@ class PastePolicy
      */
     public function create(User $user)
     {
-        //
+        // Users can generally create pastes unless they meet any of a few criteria:
+
+        // They are in a broad deny group:
+        if ($user->isMemberOf('Deny Paste (Create)')) { return false; }
+
+        // ...and that's about it, actually.
+        else { return true; }
     }
 
     /**
@@ -42,7 +48,7 @@ class PastePolicy
      */
     public function update(User $user, Paste $paste)
     {
-        //
+        return $this->getAuthorization($user, 'Paste', $paste, 'Update');
     }
 
     /**
@@ -54,7 +60,7 @@ class PastePolicy
      */
     public function delete(User $user, Paste $paste)
     {
-        //
+        return $this->getAuthorization($user, 'Paste', $paste, 'Soft Delete');
     }
 
     /**
@@ -66,7 +72,7 @@ class PastePolicy
      */
     public function restore(User $user, Paste $paste)
     {
-        //
+        return $this->getAuthorization($user, 'Paste', $paste, 'Restore');
     }
 
     /**
@@ -78,6 +84,6 @@ class PastePolicy
      */
     public function forceDelete(User $user, Paste $paste)
     {
-        //
+        return $this->getAuthorization($user, 'Paste', $paste, 'Hard Delete');
     }
 }
