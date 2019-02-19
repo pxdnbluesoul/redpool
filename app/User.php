@@ -130,4 +130,15 @@ class User extends Authenticatable
         if(!array_key_exists('group_names', $metadata)) { return false; } // User has no memberships.
         return in_array($name, $metadata['group_names']);
     }
+
+
+    // Return true or false on group membership given an array of possible groups.
+    public function isMemberOfAny(array $groups)
+    {
+        $metadata = json_decode($this->metadata, true);
+        if(!array_key_exists('group_names', $metadata)) { return false; } // User has no memberships.
+
+        // If there is any overlap between the provided groups and the user metadata, return true. If not return false.
+        return boolval(array_intersect($groups, $metadata['group_names']));
+    }
 }
