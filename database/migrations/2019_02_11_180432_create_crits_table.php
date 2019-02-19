@@ -18,7 +18,7 @@ class CreateCritsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->text('body');
-            $table->json('metadata')->nullable();
+            $table->json('metadata');
             $table->timestamps();
         });
     }

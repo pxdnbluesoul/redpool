@@ -18,7 +18,7 @@ class CreateGroupMembershipTable extends Migration
             $table->unsignedInteger('group_id');
             $table->string('member_type');
             $table->unsignedInteger('member_id');
-            $table->json('metadata')->nullable();
+            $table->json('metadata');
             $table->timestamps();
             $table->unique(['group_id','member_type','member_id']);
         });
