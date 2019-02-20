@@ -176,21 +176,21 @@ class ExtraGroupMembershipsTableSeeder extends Seeder
             ],
             // And allow users to create their own things.
             [
-                'group_id' => DB::table('groups')->where('name', 'Everyone')->pluck('id')->first(), // Parent group
-                'member_type' => 'App\Group', // Child member type (User or Group)
-                'member_id' => DB::table('groups')->where('name', 'Junior Staff')->pluck('id')->first(), // Child group
-                'metadata' => json_encode([], JSON_FORCE_OBJECT)
-            ],
-            [
-                'group_id' => DB::table('groups')->where('name', 'Everyone')->pluck('id')->first(), // Parent group
-                'member_type' => 'App\Group', // Child member type (User or Group)
-                'member_id' => DB::table('groups')->where('name', 'Chat Staff')->pluck('id')->first(), // Child group
-                'metadata' => json_encode([], JSON_FORCE_OBJECT)
-            ],
-            [
-                'group_id' => DB::table('groups')->where('name', 'Global Users')->pluck('id')->first(), // Parent group
+                'group_id' => DB::table('groups')->where('name', 'Junior Staff')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
                 'member_id' => DB::table('groups')->where('name', 'Everyone')->pluck('id')->first(), // Child group
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
+            [
+                'group_id' => DB::table('groups')->where('name', 'Chat Staff')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\Group', // Child member type (User or Group)
+                'member_id' => DB::table('groups')->where('name', 'Everyone')->pluck('id')->first(), // Child group
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
+            [
+                'group_id' => DB::table('groups')->where('name', 'Everyone')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\Group', // Child member type (User or Group)
+                'member_id' => DB::table('groups')->where('name', 'Global Users')->pluck('id')->first(), // Child group
                 'metadata' => json_encode([], JSON_FORCE_OBJECT)
             ],
         ]);
