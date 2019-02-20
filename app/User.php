@@ -86,11 +86,11 @@ class User extends Authenticatable
         if ($groups->isEmpty()) { return null; }
         else {
             foreach ($groups as $group2) {
-                if(!in_array($group2->group_id, $this->flattenedpermissions)) {
-                    $this->flattenedpermissions[] = $group2->group_id;
+                if(!in_array($group2->member_id, $this->flattenedpermissions)) {
+                    $this->flattenedpermissions[] = $group2->member_id;
                 }
                 // Try again with the next level down.
-                $result = $this->recurse($group2->group_id);
+                $result = $this->recurse($group2->member_id);
                 if ($result == null) { continue; }
             }
             return true;

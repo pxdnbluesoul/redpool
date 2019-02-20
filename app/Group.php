@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model {
@@ -11,6 +12,6 @@ class Group extends Model {
 
     public function memberships()
     {
-        return $this->morphMany('App\GroupMembership', 'member');
+        return DB::table('group_membership')->where([['member_type', 'App\Group'],['group_id', $this->id]]);
     }
 }
