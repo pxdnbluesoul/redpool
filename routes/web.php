@@ -17,4 +17,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resources([
+    'crits' => 'CritController',
+    'groups' => 'GroupController',
+    'groupmemberships' => 'GroupMembershipController',
+    'pages' => 'PageController',
+    'pastes' => 'PasteController',
+    'uploads' => 'UploadController'
+]);
+
 Route::get('/home', 'HomeController@index')->name('home');
