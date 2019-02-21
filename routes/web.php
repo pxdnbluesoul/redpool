@@ -27,3 +27,5 @@ Route::resources([
 ]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::view('/public/escaper', 'escaper');
