@@ -3,9 +3,8 @@
 @section('content')
     <script type="text/javascript">
         function convert(source) {
-            var re = /(.*)/gm;
-            var output = source.replace(re, "\@\<$&\>\@");
-            output = output.replace (/>@@<>@/g, ">@"); // I have no fucking idea why I have to do this. Regex. ¯\_(ツ)_/¯
+            var re = /^.*$/gm;
+            var output = source.replace(re, "@<$&>@");
             document.getElementById("output").innerHTML = output;
         }
     </script>
@@ -18,13 +17,10 @@
                 </h5>
                 <form method="POST" action="/escaper">
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" id="source" placeholder="Paste your stuff here." oninput="convert(this.value)" onchange="convert(this.value)"></textarea>
+                        <textarea class="form-control" rows="10" id="source" placeholder="Paste your stuff here." oninput="convert(this.value)" onchange="convert(this.value)"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn-primary btn" id="submit">Do the thing.</button>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="5" id="output" readonly>Formatted text will go here.</textarea>
+                        <textarea class="form-control" rows="10" id="output" readonly>Formatted text will go here.</textarea>
                     </div>
                 </form>
             </div>
