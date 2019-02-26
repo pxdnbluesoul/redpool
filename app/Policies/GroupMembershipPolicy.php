@@ -6,7 +6,7 @@ use App\User;
 use App\GroupMembership;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GroupMembershipPolicy
+class GroupMembershipPolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class GroupMembershipPolicy
      */
     public function view(User $user, GroupMembership $groupMembership)
     {
-        //
+        return $this->getAuthorization($user, 'User', $groupMembership, 'View');
     }
 
     /**
@@ -30,7 +30,13 @@ class GroupMembershipPolicy
      */
     public function create(User $user)
     {
-        //
+        // Users can generally NOT create group memberships unless they meet any of a few criteria:
+
+        // They are in a broad allow group:
+        if ($user->isMemberOf('Allow Group Membership (Create)')) { return true; }
+
+        // ...and that's about it, actually.
+        else { return false; }
     }
 
     /**
@@ -42,7 +48,7 @@ class GroupMembershipPolicy
      */
     public function update(User $user, GroupMembership $groupMembership)
     {
-        //
+        return $this->getAuthorization($user, 'User', $groupMembership, 'Update');
     }
 
     /**
@@ -54,7 +60,7 @@ class GroupMembershipPolicy
      */
     public function delete(User $user, GroupMembership $groupMembership)
     {
-        //
+        return $this->getAuthorization($user, 'User', $groupMembership, 'Soft Delete');
     }
 
     /**
@@ -66,7 +72,7 @@ class GroupMembershipPolicy
      */
     public function restore(User $user, GroupMembership $groupMembership)
     {
-        //
+        return $this->getAuthorization($user, 'User', $groupMembership, 'Restore');
     }
 
     /**
@@ -78,6 +84,6 @@ class GroupMembershipPolicy
      */
     public function forceDelete(User $user, GroupMembership $groupMembership)
     {
-        //
+        return $this->getAuthorization($user, 'User', $groupMembership, 'Hard Delete');
     }
 }
