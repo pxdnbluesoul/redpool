@@ -47,16 +47,16 @@ class GroupMembershipsTableSeeder extends Seeder
 
         DB::table('group_membership')->insert([
             [
-               'group_id' => DB::table('groups')->where('name', 'Crit Users')->pluck('id')->first(), // Parent group
-               'member_type' => 'App\Group', // Child member type (User or Group)
-               'member_id' => DB::table('groups')->where('name', 'Allow Crit (View)')->pluck('id')->first(), // Child group
-               'metadata' => json_encode([], JSON_FORCE_OBJECT)
-			],
-            [
                 'group_id' => DB::table('groups')->where('name', 'Crit Users')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
                 'member_id' => DB::table('groups')->where('name', 'Allow Crit (Create)')->pluck('id')->first(), // Child group
-            	'metadata' => json_encode([], JSON_FORCE_OBJECT)
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
+            [
+               'group_id' => DB::table('groups')->where('name', 'Crit Editors')->pluck('id')->first(), // Parent group
+               'member_type' => 'App\Group', // Child member type (User or Group)
+               'member_id' => DB::table('groups')->where('name', 'Allow Crit (View)')->pluck('id')->first(), // Child group
+               'metadata' => json_encode([], JSON_FORCE_OBJECT)
 			],
             [
                 'group_id' => DB::table('groups')->where('name', 'Crit Editors')->pluck('id')->first(), // Parent group
@@ -86,15 +86,15 @@ class GroupMembershipsTableSeeder extends Seeder
             [
                 'group_id' => DB::table('groups')->where('name', 'Group Users')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
-                'member_id' => DB::table('groups')->where('name', 'Allow Group (View)')->pluck('id')->first(), // Child group
-            	'metadata' => json_encode([], JSON_FORCE_OBJECT)
-			],
-            [
-                'group_id' => DB::table('groups')->where('name', 'Group Users')->pluck('id')->first(), // Parent group
-                'member_type' => 'App\Group', // Child member type (User or Group)
                 'member_id' => DB::table('groups')->where('name', 'Allow Group (Create)')->pluck('id')->first(), // Child group
             	'metadata' => json_encode([], JSON_FORCE_OBJECT)
 			],
+            [
+                'group_id' => DB::table('groups')->where('name', 'Group Editors')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\Group', // Child member type (User or Group)
+                'member_id' => DB::table('groups')->where('name', 'Allow Group (View)')->pluck('id')->first(), // Child group
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
             [
                 'group_id' => DB::table('groups')->where('name', 'Group Editors')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
@@ -160,13 +160,13 @@ class GroupMembershipsTableSeeder extends Seeder
             [
                 'group_id' => DB::table('groups')->where('name', 'Page Users')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
-                'member_id' => DB::table('groups')->where('name', 'Allow Page (View)')->pluck('id')->first(), // Child group
-            	'metadata' => json_encode([], JSON_FORCE_OBJECT)
-			],
-            [
-                'group_id' => DB::table('groups')->where('name', 'Page Users')->pluck('id')->first(), // Parent group
-                'member_type' => 'App\Group', // Child member type (User or Group)
                 'member_id' => DB::table('groups')->where('name', 'Allow Page (Create)')->pluck('id')->first(), // Child group
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
+            [
+                'group_id' => DB::table('groups')->where('name', 'Page Editors')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\Group', // Child member type (User or Group)
+                'member_id' => DB::table('groups')->where('name', 'Allow Page (View)')->pluck('id')->first(), // Child group
             	'metadata' => json_encode([], JSON_FORCE_OBJECT)
 			],
             [
@@ -196,15 +196,15 @@ class GroupMembershipsTableSeeder extends Seeder
             [
                 'group_id' => DB::table('groups')->where('name', 'Paste Users')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
-                'member_id' => DB::table('groups')->where('name', 'Allow Paste (View)')->pluck('id')->first(), // Child group
-            	'metadata' => json_encode([], JSON_FORCE_OBJECT)
-			],
-            [
-                'group_id' => DB::table('groups')->where('name', 'Paste Users')->pluck('id')->first(), // Parent group
-                'member_type' => 'App\Group', // Child member type (User or Group)
                 'member_id' => DB::table('groups')->where('name', 'Allow Paste (Create)')->pluck('id')->first(), // Child group
             	'metadata' => json_encode([], JSON_FORCE_OBJECT)
 			],
+            [
+                'group_id' => DB::table('groups')->where('name', 'Paste Editors')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\Group', // Child member type (User or Group)
+                'member_id' => DB::table('groups')->where('name', 'Allow Paste (View)')->pluck('id')->first(), // Child group
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
             [
                 'group_id' => DB::table('groups')->where('name', 'Paste Editors')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
@@ -232,13 +232,13 @@ class GroupMembershipsTableSeeder extends Seeder
             [
                 'group_id' => DB::table('groups')->where('name', 'Upload Users')->pluck('id')->first(), // Parent group
                 'member_type' => 'App\Group', // Child member type (User or Group)
-                'member_id' => DB::table('groups')->where('name', 'Allow Upload (View)')->pluck('id')->first(), // Child group
-            	'metadata' => json_encode([], JSON_FORCE_OBJECT)
-			],
-            [
-                'group_id' => DB::table('groups')->where('name', 'Upload Users')->pluck('id')->first(), // Parent group
-                'member_type' => 'App\Group', // Child member type (User or Group)
                 'member_id' => DB::table('groups')->where('name', 'Allow Upload (Create)')->pluck('id')->first(), // Child group
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ],
+            [
+                'group_id' => DB::table('groups')->where('name', 'Upload Editors')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\Group', // Child member type (User or Group)
+                'member_id' => DB::table('groups')->where('name', 'Allow Upload (View)')->pluck('id')->first(), // Child group
             	'metadata' => json_encode([], JSON_FORCE_OBJECT)
 			],
             [
