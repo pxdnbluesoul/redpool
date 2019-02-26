@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -66,12 +67,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        // Make our new user.
+        $newuser = User::create([
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'wikidotusername' => $data['wikidotusername'],
             'metadata' => json_encode([], JSON_FORCE_OBJECT)
         ]);
+
+        // Stick them in the 'Everyone' group.
+        DB::table('group_membership')->insert([
+                'group_id' => DB::table('groups')->where('name', 'Everyone')->pluck('id')->first(), // Parent group
+                'member_type' => 'App\User', // Child member type (User or Group)
+                'member_id' => $newuser->id, // Child user
+                'metadata' => json_encode([], JSON_FORCE_OBJECT)
+            ]);
+
+        // Calculate their new permissions.
+        $newuser->recursememberships();
+
+        // Return the expected user object.
+        return $newuser;
     }
 }
