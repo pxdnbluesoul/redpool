@@ -23,9 +23,10 @@ Route::resources([
     'groupmemberships' => 'GroupMembershipController',
     'pages' => 'PageController',
     'pastes' => 'PasteController',
-    'uploads' => 'UploadController'
+    'uploads' => 'UploadController',
+    'users' => 'UserController'
 ]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::view('/public/escaper', 'escaper');
+Route::view('/public/escaper', 'escaper')->name('escaper');
