@@ -34,7 +34,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('escaper') }}">{{__('Source Escaper')}}</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -48,6 +50,56 @@
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @else
+                        @can('create', App\Crit::class)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/crits">
+                                    Crits
+                                </a>
+                            </li>
+                        @endcan
+                        @can('create', App\Group::class)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/groups">
+                                    Groups
+                                </a>
+                            </li>
+                        @endcan
+                        @can('create', App\GroupMembership::class)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/groupmemberships">
+                                    Group Memberships
+                                </a>
+                            </li>
+                        @endcan
+                        @can('create', App\Page::class)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/pages">
+                                    Pages
+                                </a>
+                            </li>
+                        @endcan
+                        @can('create', App\Paste::class)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/pastes">
+                                    Pastes
+                                </a>
+                            </li>
+                        @endcan
+                        @can('create', App\Upload::class)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/uploads">
+                                    Uploads
+                                </a>
+                            </li>
+                        @endcan
+                            @can('create', App\User::class)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users">
+                                        Users
+                                    </a>
+                                </li>
+                            @endcan
+                        <!-- User Block -->
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->username }} <span class="caret"></span>
