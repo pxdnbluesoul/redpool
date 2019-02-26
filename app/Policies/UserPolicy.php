@@ -29,7 +29,7 @@ class UserPolicy extends Policy
      */
     public function create(User $user)
     {
-        // Users can generally NOT create other users unless they meet any of a few criteria:
+        // Users can generally not create other users unless they meet any of a few criteria:
 
         // They are in a broad allow group:
         if ($user->isMemberOf('Allow User (Create)')) { return true; }
