@@ -6,7 +6,7 @@ use App\User;
 use App\Group;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GroupPolicy
+class GroupPolicy extends Policy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class GroupPolicy
      */
     public function view(User $user, Group $group)
     {
-        //
+        return $this->getAuthorization($user, 'User', $group, 'View');
     }
 
     /**
@@ -30,7 +30,13 @@ class GroupPolicy
      */
     public function create(User $user)
     {
-        //
+        // Users can generally create groups unless they meet any of a few criteria:
+
+        // They are in a broad deny group:
+        if ($user->isMemberOf('Deny Group (Create)')) { return false; }
+
+        // ...and that's about it, actually.
+        else { return true; }
     }
 
     /**
@@ -42,7 +48,7 @@ class GroupPolicy
      */
     public function update(User $user, Group $group)
     {
-        //
+        return $this->getAuthorization($user, 'User', $group, 'Update');
     }
 
     /**
@@ -54,7 +60,7 @@ class GroupPolicy
      */
     public function delete(User $user, Group $group)
     {
-        //
+        return $this->getAuthorization($user, 'User', $group, 'Soft Delete');
     }
 
     /**
@@ -66,7 +72,7 @@ class GroupPolicy
      */
     public function restore(User $user, Group $group)
     {
-        //
+        return $this->getAuthorization($user, 'User', $group, 'Restore');
     }
 
     /**
@@ -78,6 +84,6 @@ class GroupPolicy
      */
     public function forceDelete(User $user, Group $group)
     {
-        //
+        return $this->getAuthorization($user, 'User', $group, 'Hard Delete');
     }
 }
