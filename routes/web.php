@@ -17,15 +17,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resources([
-    'crits' => 'CritController',
-    'groups' => 'GroupController',
-    'groupmemberships' => 'GroupMembershipController',
-    'pages' => 'PageController',
-    'pastes' => 'PasteController',
-    'uploads' => 'UploadController',
-    'users' => 'UserController'
-]);
+Route::group(['middleware' => 'auth'], function() {
+
+    Route::resources([
+        'crits' => 'CritController',
+        'groups' => 'GroupController',
+        'groupmemberships' => 'GroupMembershipController',
+        'pages' => 'PageController',
+        'pastes' => 'PasteController',
+        'uploads' => 'UploadController',
+        'users' => 'UserController'
+    ]);
+
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
