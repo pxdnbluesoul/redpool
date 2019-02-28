@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\GroupMembership;
 use Illuminate\Http\Request;
+use App\User;
+use App\Group;
 
 class GroupMembershipController extends Controller
 {
@@ -24,7 +26,7 @@ class GroupMembershipController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +37,20 @@ class GroupMembershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', GroupMembership::class);
+
+        foreach($request->groups as $group) {
+            $groupmembership = new GroupMembership;
+            $groupmembership->group_id = $group;
+            if ($request->member_type == "User") { $groupmembership->member_type = "App\User"; }
+            elseif ($request->member_type == "Group") { $groupmembership->member_type = "App\Group"; }
+            else { abort(400); }
+            $groupmembership->member_id = $request->member_id;
+            $groupmembership->metadata = json_encode("", JSON_FORCE_OBJECT);
+            $groupmembership->save();
+        }
+
+        return back();
     }
 
     /**
