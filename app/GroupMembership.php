@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class GroupMembership extends Pivot
 {
-    public function users()
+    public function parent()
     {
-       return $this->morphedByMany('App\User', 'member');
+        return $this->belongsTo('App\Group', 'group_id', 'id');
     }
 
-    public function groups()
+    public function child()
     {
-        return $this->morphedByMany('App\Group', 'member');
+        return $this->morphTo('member');
     }
 }
