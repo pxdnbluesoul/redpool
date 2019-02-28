@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @auth
     <div class="container">
         <div class="card">
             <h3 class="card-header">Users</h3>
@@ -35,13 +34,4 @@
             </div>
         </div>
     </div>
-    @endauth
-    @guest
-        <div class="container">
-            <div class="card">
-                <h3 class="card-header">Access Denied</h3>
-                <div class="card-body">Nope.</div>
-            </div>
-        </div>
-    @endguest
 @endsection

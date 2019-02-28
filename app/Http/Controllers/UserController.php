@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +60,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -71,7 +74,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        $validated = $request->validate([
+           'username' => 'required|unique:users|min:1',
+            'email' => 'required|email|unique:users',
+            'wikidotusername' => 'required|unique:users|min:3'
+        ]);
+
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->wikidotusername = $request->wikidotusername;
+        $user->save();
+
+        return back();
+
     }
 
     /**
