@@ -57,6 +57,8 @@ class Policy
         // Note we are not returning false on no_user_rights being present, just that they must receive the true
         // by some other means.
         if ($object->user_id == $user->id && $no_user_rights != true) { return true; }
+        // Edge case for user objects as they don't have a user_id field.
+        if ($object_type == 'User' && $object->id == $user->id && $no_user_rights != true) { return true; }
 
         // Check for membership in an explicit allow group.
         if ($user->isMemberOf('Allow '.$object_type.' ('.$access_level.')')) { return true; }
