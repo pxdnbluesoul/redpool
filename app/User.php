@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->morphMany('App\GroupMembership', 'member');
     }
 
+    public function groups()
+    {
+        return $this->hasManyThrough('App\Group', 'App\GroupMembership', 'member_id', 'id', 'id', 'group_id')->where('member_type', '=', 'App\User');
+    }
+
     public $flattenedpermissions = [];
 
     public $groupmemberships = [];
