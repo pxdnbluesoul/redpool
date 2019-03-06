@@ -17,16 +17,28 @@
                                 <label for="body">Body</label>
                                 <textarea class="form-control" rows="10" id="body" name="body" style="overflow-wrap: break-word; font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;"></textarea>
                             </div>
-                            <select name="language" id="language" class="form-control">
-                                @foreach ($languages as $shortcode=>$friendlyname)
-                                    <option value="{{$shortcode}}"
-                                            @if($shortcode == "text")
-                                                selected
-                                            @endif
-                                        >{{$friendlyname}}</option>
-                                @endforeach
-                            </select>
-                            <small>You will allow other users and groups to see and modify this paste on the next page.</small>
+                            <div class="form-group">
+                                <label for="language">Syntax Highlighting:</label>
+                                <select name="language" id="language" class="form-control">
+                                    @foreach ($languages as $shortcode=>$friendlyname)
+                                        <option value="{{$shortcode}}"
+                                                @if($shortcode == "text")
+                                                    selected
+                                                @endif
+                                            >{{$friendlyname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="shareoptions">Share with:</label>
+                                <select name="shareoptions[]" id="shareoptions" class="form-control">
+                                    <option value="none">Only Me (You can change this later.)</option>
+                                    @foreach (Auth::user()->groups as $group)
+                                        <option value="{{$group->id}}">{{$group->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <small>You can allow more users and groups to see this paste on the next page.</small>
                             <button type="submit" class="btn btn-success btn-block">Create Paste</button>
                         </form>
                     </div>
