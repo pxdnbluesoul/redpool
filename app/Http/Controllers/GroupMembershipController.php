@@ -56,10 +56,10 @@ class GroupMembershipController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\GroupMembership  $groupMembership
+     * @param  \App\GroupMembership  $groupmembership
      * @return \Illuminate\Http\Response
      */
-    public function show(GroupMembership $groupMembership)
+    public function show(GroupMembership $groupmembership)
     {
         //
     }
@@ -67,10 +67,10 @@ class GroupMembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\GroupMembership  $groupMembership
+     * @param  \App\GroupMembership  $groupmembership
      * @return \Illuminate\Http\Response
      */
-    public function edit(GroupMembership $groupMembership)
+    public function edit(GroupMembership $groupmembership)
     {
         //
     }
@@ -79,10 +79,10 @@ class GroupMembershipController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GroupMembership  $groupMembership
+     * @param  \App\GroupMembership  $groupmembership
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GroupMembership $groupMembership)
+    public function update(Request $request, GroupMembership $groupmembership)
     {
         //
     }
@@ -90,11 +90,14 @@ class GroupMembershipController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\GroupMembership  $groupMembership
+     * @param  \App\GroupMembership  $groupmembership
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GroupMembership $groupMembership)
-    {
-        //
+    public function destroy(GroupMembership $groupmembership)
+    {   
+        $this->authorize('forceDelete',$groupmembership);
+
+       $groupmembership->delete();
+        return back();
     }
 }
