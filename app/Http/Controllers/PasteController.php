@@ -66,6 +66,8 @@ class PasteController extends Controller
      */
     public function show(Paste $paste)
     {
+        $this->authorize('view', $paste);
+
         $metadata = json_decode($paste->metadata, true);
         $geshi = new GeSHi($paste->body, $metadata['language']);
         $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
