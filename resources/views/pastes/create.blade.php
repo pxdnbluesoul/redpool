@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="shareoptions">Share with:</label>
-                                <select name="shareoptions[]" id="shareoptions" class="form-control">
+                                <select name="shareoptions" id="shareoptions" class="form-control">
                                     <option value="none">Only Me (You can change this later.)</option>
                                     @foreach (Auth::user()->groups as $group)
                                         <option value="{{$group->id}}">{{$group->name}}</option>
