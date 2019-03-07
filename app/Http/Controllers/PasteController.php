@@ -77,7 +77,9 @@ class PasteController extends Controller
      */
     public function edit(Paste $paste)
     {
-        //
+        $this->authorize('update', $paste);
+
+        return view('pastes.edit', compact('paste'));
     }
 
     /**
@@ -89,25 +91,34 @@ class PasteController extends Controller
      */
     public function update(Request $request, Paste $paste)
     {
-        // Currently all we're doing here is working with metadata and permissons.
-        $metadata = json_decode($paste->metadata, true);
+        $this->authorize('update', $paste);
 
-        // We will work one of two ways depending on whether we're adding or removing users/groups from metadata.
-        if($request->action == "add") {
-            foreach($request->members as $member) {
-                // Take advantage of conventions we've laid out to treat user and group additions the same way.
-                $metadata["Allow " . $request->member_type . "s (" . $request->access_level . ")"][] = $member;
+        if($request->actiontype == 'perms') {
+            // Currently all we're doing here is working with metadata and permissons.
+            $metadata = json_decode($paste->metadata, true);
+
+            // We will work one of two ways depending on whether we're adding or removing users/groups from metadata.
+            if ($request->action == "add") {
+                foreach ($request->members as $member) {
+                    // Take advantage of conventions we've laid out to treat user and group additions the same way.
+                    $metadata["Allow " . $request->member_type . "s (" . $request->access_level . ")"][] = $member;
+                    $paste->metadata = json_encode($metadata);
+                    $paste->save();
+                }
+                return back();
+            } elseif ($request->action == "remove") {
+                $metadata["Allow " . $request->member_type . "s (" . $request->access_level . ")"] = array_diff(array_values($metadata["Allow " . $request->member_type . "s (" . $request->access_level . ")"]), array($request->member_id));
                 $paste->metadata = json_encode($metadata);
                 $paste->save();
+                return back();
             }
-            return back();
         }
-        elseif($request->action == "remove") {
-            $metadata["Allow " . $request->member_type . "s (" . $request->access_level . ")"] = array_diff(array_values($metadata["Allow " . $request->member_type . "s (" . $request->access_level . ")"]),array($request->member_id));
-            $paste->metadata = json_encode($metadata);
+
+        elseif($request->actiontype == 'rename') {
+            $paste->name = $request->name;
             $paste->save();
-            return back();
-            }
+            return redirect()->to('/pastes/'.$paste->id);
+        }
     }
 
     /**
