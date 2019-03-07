@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function() {
         'uploads' => 'UploadController',
         'users' => 'UserController'
     ]);
-
+    Route::get('/uploads/{upload}/delete', 'UploadController@confirmDelete');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

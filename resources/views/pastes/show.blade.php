@@ -27,6 +27,7 @@
                                                 <input type="hidden" name="member_type" value="User">
                                                 <input type="hidden" name="member_id" value="{{$user}}">
                                                 <input type="hidden" name="action" value="remove">
+                                                <input type="hidden" name="actiontype" value="perms">
                                                 <input type="hidden" name="access_level" value="View">
                                                 <button type="submit" class="btn btn-danger">Remove Access</button>
                                             </form>
@@ -45,6 +46,7 @@
                                                     <input type="hidden" name="member_type" value="User">
                                                     <input type="hidden" name="member_id" value="{{$user}}">
                                                     <input type="hidden" name="action" value="remove">
+                                                    <input type="hidden" name="actiontype" value="perms">
                                                     <input type="hidden" name="access_level" value="Update">
                                                     <button type="submit" class="btn btn-danger">Remove Access</button>
                                                 </form>
@@ -63,6 +65,7 @@
                                                     <input type="hidden" name="member_type" value="Group">
                                                     <input type="hidden" name="member_id" value="{{$group}}">
                                                     <input type="hidden" name="action" value="remove">
+                                                    <input type="hidden" name="actiontype" value="perms">
                                                     <input type="hidden" name="access_level" value="View">
                                                     <button type="submit" class="btn btn-danger">Remove Access</button>
                                                 </form>
@@ -81,6 +84,7 @@
                                                     <input type="hidden" name="member_type" value="Group">
                                                     <input type="hidden" name="member_id" value="{{$group}}">
                                                     <input type="hidden" name="action" value="remove">
+                                                    <input type="hidden" name="actiontype" value="perms">
                                                     <input type="hidden" name="access_level" value="Update">
                                                     <button type="submit" class="btn btn-danger">Remove Access</button>
                                                 </form>
@@ -113,6 +117,7 @@
                         </select>
                         <input type="hidden" name="member_type" value="Group">
                         <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="actiontype" value="perms">
                         <button class="btn btn-block btn-success mt-2">Share With Groups</button>
                     </form>
                 </div>
@@ -136,6 +141,7 @@
                         </select>
                         <input type="hidden" name="member_type" value="User">
                         <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="actiontype" value="perms">
                         <button class="btn btn-block btn-success mt-2">Share With Users</button>
                     </form>
                 </div>
