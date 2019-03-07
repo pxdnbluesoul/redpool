@@ -111,6 +111,10 @@ class UploadController extends Controller
         $this->authorize('update', $upload);
 
         if($request->actiontype == 'perms') {
+
+            // If the request was sent with an empty set, kick it back.
+            if ($request->members == null) { return back(); }
+
             // Currently all we're doing here is working with metadata and permissons.
             $metadata = json_decode($upload->metadata, true);
 
