@@ -112,8 +112,8 @@
                         <small>Please select only the most specific group required. If you only need to share something
                             with team Captains, for example, you do not need to select team members as well.</small>
                         <select name="access_level" class="form-control">
-                            <option name="View">View</option>
-                            <option name="Update">Edit</option>
+                            <option value="View">View</option>
+                            <option value="Update">Edit</option>
                         </select>
                         <input type="hidden" name="member_type" value="Group">
                         <input type="hidden" name="action" value="add">
@@ -136,8 +136,8 @@
                             </select>
                         </div>
                         <select name="access_level" class="form-control">
-                            <option name="View">View</option>
-                            <option name="Update">Edit</option>
+                            <option value="View">View</option>
+                            <option value="Update">Edit</option>
                         </select>
                         <input type="hidden" name="member_type" value="User">
                         <input type="hidden" name="action" value="add">
