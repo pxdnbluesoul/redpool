@@ -48,7 +48,7 @@ class PasteController extends Controller
         $paste->body = $request->body;
         $paste->metadata = json_encode([
             "language" => $request->language,
-            "Allow Groups (View)" => $request->shareoptions
+            "Allow Groups (View)" => array($request->shareoptions)
         ]);
         $paste->save();
         return redirect()->to('/pastes/'.$paste->id);

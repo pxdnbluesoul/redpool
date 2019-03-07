@@ -46,7 +46,7 @@ class UploadController extends Controller
         $upload->path = $path;
         if($request->shareoptions != 'none') {
             $upload->metadata = json_encode([
-                "Allow Groups (View)" => $request->shareoptions
+                "Allow Groups (View)" => array($request->shareoptions)
             ]);
         } else { $upload->metadata = json_encode([], JSON_FORCE_OBJECT); }
         $upload->save();
