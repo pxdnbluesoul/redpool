@@ -20,7 +20,7 @@
                                 @if(isset($metadata['Allow Users (View)']))
                                     @foreach($metadata['Allow Users (View)'] as $user)
                                         <tr>
-                                            <td>{{App\User::find($user)->pluck('username')->first()}} (View)</td>
+                                            <td>{{App\User::where('id',$user)->pluck('username')->first()}} (View)</td>
                                             <td>
                                                 <form method="post" action="/uploads/{{$upload->id}}">
                                                     @csrf
@@ -39,7 +39,7 @@
                                 @if(isset($metadata['Allow Users (Update)']))
                                     @foreach($metadata['Allow Users (Update)'] as $user)
                                         <tr>
-                                            <td>{{App\User::find($user)->pluck('username')->first()}} (Edit)</td>
+                                            <td>{{App\User::where('id',$user)->pluck('username')->first()}} (Edit)</td>
                                             <td>
                                                 <form method="post" action="/uploads/{{$upload->id}}">
                                                     @csrf
@@ -77,7 +77,7 @@
                                 @if(isset($metadata['Allow Groups (Update)']))
                                     @foreach($metadata['Allow Groups (Update)'] as $group)
                                         <tr>
-                                            <td>{{App\Group::find($group)->pluck('name')->first()}} (Edit)</td>
+                                            <td>{{App\Group::where('id',$group)->pluck('name')->first()}} (Edit)</td>
                                             <td>
                                                 <form method="post" action="/uploads/{{$upload->id}}">
                                                     @csrf
